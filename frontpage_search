@@ -1,0 +1,19 @@
+const containers = document.querySelectorAll('.simplified-layout-media-block');
+
+// Format the data as a clean comma-separated string
+const textToCopy = Array.from(containers).map((container) => {
+  const title = container.querySelector('.meblfmrl-title')?.textContent.trim() || 'N/A';
+  const link = container.querySelector('.simplified-layout-media-block-footer.media-block-footer-template')?.href || 'N/A';
+  const countEls = container.querySelectorAll('.meblpri-count');
+  
+  const smileCount = countEls[0]?.textContent.trim() || '0';
+  const cryCount = countEls[1]?.textContent.trim() || '0';
+
+  // Format: Title, SmileCount, CryCount, URL
+  // If a title contains a comma, wrapping it in quotes prevents it from breaking columns in Excel
+  return `"${title}",${smileCount},${cryCount},${link}`;
+}).join('\n');
+
+// Copy the final CSV string directly to your clipboard
+copy(textToCopy); 
+console.log("✅ Copied as comma-separated values! Just paste (Ctrl+V) into Notepad or Excel.");
